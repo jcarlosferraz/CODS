@@ -1,0 +1,42 @@
+
+Kolmogorov-smirnov 2-sample
+
+t1:   ...xxxxxxxxxxxxxxxx[xxxxx][xxxxx]
+t2:   ...xxxxxxxxxxxxxxxxxxxxxxx[xxxxx][xxxxx]
+t3:   ...xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[xxxxx][xxxxx]       OBS: funciona melhor com drift abrupto
+
+
+ADWIN
+
+t1:   ...xxxxxxxxxxxxxxx[xxxxxxxxxxx]
+t2:   ...xxxxxxxxxxxxxxxx[xxxxxxxxxxxx]
+t3:   ...xxxxxxxxxxxxxxxxxx[xxxxxxxxxxxx]                  OBS: o tamanho dessa janela é adaptativo
+
+5000 instâncias
+
+feature1: as 5000 instâncias variam de 0 a 100
+feature2: 2000 primeiras instâncias são apenas 1 e 0 (tendo maioria 0), em seguida passou-se a ter mais 1,cerca de 80%
+feature3: Tente fazer algo sem drift variando de 0 a 399
+feature4: 1000 primeiras linhas foram apenas valores entre 0 e 10, dai pra frente houve um drift lento que permitiu que no final teriam valores de 20 a 40
+feature5: sem drift, variando de 0 a 3
+feature6: 4000 primeiras linhas valores de 0 a 4, a partir dai houve drift abrupto para outros valores
+feature7: sem drift (mas com numeros altos)
+
+nossa primeira versão esta ignorando correlação entre colunas
+
+adwin delta: 0.1 sensível
+             0.01 equilibrado
+             0.001 conservador, menor que isso quase nunca detecta
+
+Concept Drift de maneira mais ampla: Pt(X, y) != Pt+w(X, y).
+Concept Drift de maneira mais restrita: Pt​(Y∣X)=Pt+w​(Y∣X)
+Concept drift é um conceito que não esta atrelado a uma coluna especifica, mas ao todo
+
+Se p(Y) mudou, mas p(X) não, houve concept drift
+Vamos considerar label binária
+
+tamanho do intervalo usado para detectar concept drift deve ser analisado melhor
+
+Resposta honesta caso eu não use pcaps
+"Os experimentos são conduzidos em modo de simulação de stream, onde as instâncias do dataset
+são apresentadas sequencialmente ao modelo, simulando chegada online de fluxos."
