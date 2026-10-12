@@ -1,0 +1,36 @@
+import numpy as np
+from river.drift import ADWIN
+import pandas as pd
+from scipy.spatial.distance import squareform
+from scipy.cluster import hierarchy
+
+def CreateClusters(matrix):
+    distance = 1 - np.abs(matrix)
+    distance_format = squareform(distance, checks=False)
+    
+    #arvore de linkage
+    linkage = hierarchy.linkage(distance_format, method='complete')
+
+    threshold = 0.25 #correlação >= 0.75
+    labels = hierarchy.fcluster(linkage, t=threshold, criterion='distance')
+
+    df_clusters = pd.DataFrame({'feature': matrix.columns, 'cluster': labels})
+    clusters = df_clusters.groupby('cluster')['feature'].apply(list).to_dict()
+
+    return clusters
+
+def AutonomousFeatureCorrelator(instances, features):
+        #Formar matrix de correlação com as primeiras 500 instâncias
+    window = pd.DataFrame(instances)
+    correlation = window.corr(method="spearman")
+    correlation = abs(correlation) >= 0.75
+
+    #criar clusters usando a matrix e atrelar pesos
+    clusters = CreateClusters(correlation)
+
+    clusters = {
+        cluster_id: {feature: features[feature] for feature in feature_list}
+        for cluster_id, feature_list in clusters.items()
+    }
+
+    return clusters
