@@ -2,7 +2,7 @@ import numpy as np
 from river.drift import ADWIN
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
-from AutonomousFeatureCorrelator import AutonomousFeatureCorrelator
+from FeatureCorrelator import FeatureCorrelator
 
 def InstanceCollect(data, current_instance):
     instances = []
@@ -59,26 +59,40 @@ def FDD2(dataset, features, threshold , sensi):
         if features_with_drift:
             print(f"Instância {i}: Drift detectado nas colunas {features_with_drift}")
 
-    clusters = AutonomousFeatureCorrelator(instances, features)
+    clusters = FeatureCorrelator(instances, features)
     num_clusters = len(clusters)
-    num_created_matrix += 1
+    num_created_matrix += 1 
 
-    #rodar detectores para o restante
-    for i, instance in data.iloc[500:].iterrows():
+    #mapear o nome de cada coluna para seu index
+    col_to_idx = {col: idx for idx, col in enumerate(data.columns)}
 
+    #Localizar ID do representante de cada cluster
+    processed_clusters = []
+    for cluster in clusters.values():
+        representative, followers = GreaterWeight(cluster)
+        rep_idx = col_to_idx[representative] # Pega o índice numérico da coluna
+        processed_clusters.append((representative, rep_idx, followers))
+
+    #dataframe --> numpy matriz
+    X = data.to_numpy(dtype=float)
+
+    for i in range(len(X)):
+        row = X[i]
         features_with_drift = []
 
-        for cluster in clusters.values():
-                representative, followers = GreaterWeight(cluster)
-                val = instance[representative]
-                detectors[representative].update(val)
+        # Iterar apenas sobre os clusters já processados
+        for representative, rep_idx, followers in processed_clusters:
 
-                if detectors[representative].drift_detected:
-                    peso_atual += features[representative]
-                    features_with_drift.append(representative)
-                    for follower in followers:
-                        peso_atual += features[follower]
-                        features_with_drift.append(follower)            
+            val = row[rep_idx]            
+            detectors[representative].update(val)
+
+            if detectors[representative].drift_detected:
+                peso_atual += features[representative]
+                features_with_drift.append(representative)
+                
+                for follower in followers:
+                    peso_atual += features[follower]
+                    features_with_drift.append(follower)           
 
         if features_with_drift:
             print(f"Instância {i}: Drift detectado nas colunas {features_with_drift}")

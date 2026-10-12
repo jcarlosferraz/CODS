@@ -19,11 +19,11 @@ def CreateClusters(matrix):
 
     return clusters
 
-def AutonomousFeatureCorrelator(instances, features):
+def FeatureCorrelator(instances, features):
         #Formar matrix de correlação com as primeiras 500 instâncias
     window = pd.DataFrame(instances)
     correlation = window.corr(method="spearman")
-    correlation = abs(correlation) >= 0.75
+    correlation = abs(correlation) >= 0.55
 
     #criar clusters usando a matrix e atrelar pesos
     clusters = CreateClusters(correlation)
