@@ -2,7 +2,7 @@ import numpy as np
 from river.drift import ADWIN
 from sklearn.preprocessing import MinMaxScaler
 import pandas as pd
-from FeatureCorrelator import FeatureCorrelator
+from OnlineFeatureCorrelator import FeatureCorrelator
 
 def InstanceCollect(data, current_instance):
     instances = []
@@ -27,13 +27,14 @@ def GreaterWeight(cluster):
     return representative, followers
 
 
-def FDD2(dataset, features, threshold , sensi):
+def CODS(dataset, features, threshold , sensi):
     
     print("Starting concept drift detection")
     peso_limite = threshold
     peso_atual = 0
     num_clusters = 0
     num_created_matrix = 0
+
 
     #Features filtradas pelo operador
     data = dataset[list(features.keys())]

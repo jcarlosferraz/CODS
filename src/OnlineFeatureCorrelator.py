@@ -8,10 +8,10 @@ def CreateClusters(matrix):
     distance = 1 - np.abs(matrix)
     distance_format = squareform(distance, checks=False)
     
-    #arvore de linkage
+    #linkage tree
     linkage = hierarchy.linkage(distance_format, method='complete')
 
-    threshold = 0.25 #correlação >= 0.75
+    threshold = 0.25 #correlation >= 0.75
     labels = hierarchy.fcluster(linkage, t=threshold, criterion='distance')
 
     df_clusters = pd.DataFrame({'feature': matrix.columns, 'cluster': labels})
@@ -20,7 +20,6 @@ def CreateClusters(matrix):
     return clusters
 
 def FeatureCorrelator(instances, features):
-        #Formar matrix de correlação com as primeiras 500 instâncias
     window = pd.DataFrame(instances)
     correlation = window.corr(method="spearman")
     correlation = abs(correlation) >= 0.55
