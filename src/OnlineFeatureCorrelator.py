@@ -22,7 +22,7 @@ def CreateClusters(matrix):
 def FeatureCorrelator(instances, features):
     window = pd.DataFrame(instances)
     correlation = window.corr(method="spearman")
-    correlation = abs(correlation) >= 0.55
+    correlation = abs(correlation) >= 0.95
 
     #criar clusters usando a matrix e atrelar pesos
     clusters = CreateClusters(correlation)

@@ -14,17 +14,17 @@ start = time.time()
 
 # CODS( data, 
 #     {
-#     "duration": 1, "protocol_type": 1, "service": 1, "flag": 2,
-#     "src_bytes": 2, "dst_bytes": 2, "urgent": 1, "hot": 1, "num_failed_logins": 1,
-#     "logged_in": 2, "num_compromised": 1, "root_shell": 1, "su_attempted": 1,
+#     "duration": 1, "protocol_type": 1, "service": 1, "flag": 1,
+#     "src_bytes": 1, "dst_bytes": 1, "urgent": 1, "hot": 1, "num_failed_logins": 1,
+#     "logged_in": 1, "num_compromised": 1, "root_shell": 1, "su_attempted": 1,
 #     "num_root": 1, "num_file_creations": 1, "num_shells": 1, "num_access_files": 1, 
-#     "is_guest_login": 1, "count": 5, "srv_count": 5, "serror_rate": 4, 
-#     "srv_serror_rate": 4, "rerror_rate": 2, "srv_rerror_rate": 1, "same_srv_rate": 5, 
+#     "is_guest_login": 1, "count": 1, "srv_count": 1, "serror_rate": 1, 
+#     "srv_serror_rate": 1, "rerror_rate": 1, "srv_rerror_rate": 1, "same_srv_rate": 1, 
 #     "diff_srv_rate": 1,  "srv_diff_host_rate": 1, "dst_host_count": 1,
-#     "dst_host_srv_count": 3, "dst_host_same_srv_rate": 3,
-#     "dst_host_diff_srv_rate": 1, "dst_host_same_src_port_rate": 3,
-#     "dst_host_srv_diff_host_rate": 1, "dst_host_serror_rate": 4,
-#     "dst_host_srv_serror_rate": 4, "dst_host_rerror_rate": 2,
+#     "dst_host_srv_count": 1, "dst_host_same_srv_rate": 1,
+#     "dst_host_diff_srv_rate": 1, "dst_host_same_src_port_rate": 1,
+#     "dst_host_srv_diff_host_rate": 1, "dst_host_serror_rate": 1,
+#     "dst_host_srv_serror_rate": 1, "dst_host_rerror_rate": 1,
 #     "dst_host_srv_rerror_rate": 1
 # },
 #     60,
@@ -35,12 +35,11 @@ start = time.time()
 
 # CODS( 
 #     data, 
-#     {'http.content_length' : 1 , 'http.response' : 1 , 'tcp.ack' : 1 , 'tcp.ack_raw' : 1 ,
-#        'tcp.checksum' : 1 , 'tcp.connection.fin' : 1 , 'tcp.connection.rst' : 1 ,
-#        'tcp.connection.syn' : 1 , 'tcp.connection.synack' : 1 , 'tcp.dstport' : 1 ,
-#        'tcp.flags' : 1 , 'tcp.flags.ack' : 1 , 'tcp.len' : 1 , 'tcp.seq' : 1 , 'udp.time_delta' : 1 ,
-#        'mqtt.len' : 1 , 'mqtt.topic_len' : 1 , 'mbtcp.len' : 1 , 'mbtcp.unit_id' : 1 ,
-#        'Attack_label' : 1 , 'Attack_type_encoded' : 1},
+#     {'http.content_length' : 3 , 'http.response' : 3 , 'tcp.ack' : 1 , 'tcp.ack_raw' : 1 ,
+#        'tcp.checksum' : 1 , 'tcp.connection.fin' : 2 , 'tcp.connection.rst' : 2 ,
+#        'tcp.connection.syn' : 2 , 'tcp.connection.synack' : 2 , 'tcp.dstport' : 3 ,
+#        'tcp.flags' : 2 , 'tcp.flags.ack' : 2 , 'tcp.len' : 3 , 'tcp.seq' : 1 , 'udp.time_delta' : 1 ,
+#        'mqtt.len' : 1 , 'mqtt.topic_len' : 1 , 'mbtcp.len' : 1 , 'mbtcp.unit_id' : 1},
 #     60,
 #     0.01
 # )
@@ -94,4 +93,3 @@ CODS(
 
 end = time.time()
 print(f"Run Time: {end - start:.4f} seconds")
-
