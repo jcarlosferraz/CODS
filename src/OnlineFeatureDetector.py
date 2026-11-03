@@ -23,6 +23,8 @@ def GreaterWeight(cluster):
     
     followers = list(cluster.keys())
     followers.remove(representative)
+
+    print(representative)
     
     return representative, followers
 
